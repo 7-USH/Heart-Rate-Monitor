@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "981067981919",
+    "project_id": "heart-rate-monitor-cee6e",
+    "storage_bucket": "heart-rate-monitor-cee6e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:981067981919:android:5c4d725565217c11e2e7ea",
+        "android_client_info": {
+          "package_name": "com.example.heart_rate_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "981067981919-q65vb8lavg63h9490n5t0gl0jenosf1e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.heart_rate_app",
+            "certificate_hash": "5dbc843bc21cb22fb98a6993865d2f84ea9936d0"
+          }
+        },
+        {
+          "client_id": "981067981919-jgosvrt53hlj9o60c7uuukfugk4bsvr7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDpBJ9QAeiTAfgv-tHpz067n7P9cNiU5UA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "981067981919-jgosvrt53hlj9o60c7uuukfugk4bsvr7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
