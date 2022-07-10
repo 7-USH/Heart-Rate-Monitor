@@ -50,6 +50,10 @@ class LineTitles {
                   return '150';
                 case 4:
                   return '200';
+                case 5:
+                  return '250';
+                case 6:
+                  return '300';
               }
               return "";
             }),

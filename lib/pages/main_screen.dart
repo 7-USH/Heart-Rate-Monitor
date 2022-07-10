@@ -2,8 +2,7 @@
 
 import 'dart:async';
 import 'dart:convert';
-import 'dart:ffi';
-
+import 'dart:math';
 import 'package:breathing_collection/breathing_collection.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -51,6 +50,9 @@ class _MainScreenState extends State<MainScreen>
   bool isProcessing = true;
   double sec = 0;
   List<FlSpot> spots = [];
+  bool recordComplete = false;
+  String maxBpm = "";
+  String minBpm = "";
 
   @override
   void initState() {
@@ -80,6 +82,23 @@ class _MainScreenState extends State<MainScreen>
     });
   }
 
+  void maxabout3(double a, double b, double c) {
+    if (a >= b && a >= c) {
+      maxBpm = a.toStringAsFixed(0);
+    }
+    if (b >= a && b >= c) {
+      maxBpm = b.toStringAsFixed(0);
+    }
+
+    if (c >= a && c >= b) {
+      maxBpm = c.toStringAsFixed(0);
+    }
+  }
+
+  void minabout3(double a, double b, double c) {
+    minBpm = min(min(a, b), c).toStringAsFixed(0);
+  }
+
   void startRecordingandParsing() async {
     Future.delayed(Duration(seconds: 5)).then((value) async {
       await cameraController.startVideoRecording();
@@ -88,6 +107,9 @@ class _MainScreenState extends State<MainScreen>
         videoFile = await cameraController.stopVideoRecording();
         print("stop");
         await cameraController.setFlashMode(FlashMode.off);
+        setState(() {
+          recordComplete = true;
+        });
         final file = io.File(videoFile!.path);
         const String filename = "test.mp4";
         String dst = 'files/$filename';
@@ -97,16 +119,20 @@ class _MainScreenState extends State<MainScreen>
         final url = await snapShot.ref.getDownloadURL();
         print(url);
         var result = await HeartRateApi.getData(imageurl: "$url.mp4");
-        Map<String, dynamic> valueMap = await jsonDecode(result);
+        print(result.toString());
+        Map<String, dynamic> valueMap = await jsonDecode(result.toString());
         bpm = Bpm.fromJson(valueMap);
         print(bpm.r_avg);
         setState(() {
           isProcessing = false;
           cameraController.dispose();
           for (int i = 1; i < bpm.r_avg.length; i++) {
-            spots.add(FlSpot(sec, bpm.r_avg[i] * 100));
+            double value = (bpm.r_avg[i] + bpm.b_avg[i] + bpm.g_avg[i]) / 3;
+            spots.add(FlSpot(sec, value));
             sec = sec + 0.03;
           }
+          maxabout3(bpm.b_bpm, bpm.r_bpm, bpm.g_bpm);
+          minabout3(bpm.b_bpm, bpm.r_bpm, bpm.g_bpm);
         });
       });
     });
@@ -198,12 +224,11 @@ class _MainScreenState extends State<MainScreen>
             children: [
               Card(
                 margin: EdgeInsets.only(top: 50, left: 10, right: 10),
-                elevation: 2.0,
+                elevation: 4.0,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(2),
                 ),
                 color: scaffoldColor,
-                shadowColor: Colors.transparent,
                 child: Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: SizedBox(
@@ -212,7 +237,7 @@ class _MainScreenState extends State<MainScreen>
                         minX: 0,
                         maxX: 8,
                         minY: 0,
-                        maxY: 4,
+                        maxY: 6,
                         axisTitleData: FlAxisTitleData(
                             show: true,
                             rightTitle: AxisTitle(
@@ -277,7 +302,7 @@ class _MainScreenState extends State<MainScreen>
                   child: Card(
                       margin: EdgeInsets.only(
                           left: 10, right: 10, top: 25, bottom: 20),
-                      elevation: 2.0,
+                      elevation: 4.0,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(2),
                       ),
@@ -344,7 +369,7 @@ class _MainScreenState extends State<MainScreen>
                                   TextSpan(
                                     children: [
                                       TextSpan(
-                                          text: bpm.b_bpm.toStringAsFixed(0),
+                                          text: maxBpm,
                                           style: appText(
                                               size: 23,
                                               color: heartColor,
@@ -370,7 +395,7 @@ class _MainScreenState extends State<MainScreen>
                                   TextSpan(
                                     children: [
                                       TextSpan(
-                                          text: bpm.g_bpm.toStringAsFixed(0),
+                                          text: minBpm,
                                           style: appText(
                                               size: 23,
                                               color: heartColor,
@@ -473,11 +498,16 @@ class _MainScreenState extends State<MainScreen>
                     child: AspectRatio(
                       aspectRatio: 1,
                       child: CameraPreview(cameraController,
-                          child: Center(
-                            child: Icon(
-                              Icons.fingerprint_outlined,
-                              color: heartColor,
-                              size: 60,
+                          child: Container(
+                            color: recordComplete
+                                ? Colors.white
+                                : Colors.transparent,
+                            child: Center(
+                              child: Icon(
+                                Icons.fingerprint_outlined,
+                                color: heartColor,
+                                size: 60,
+                              ),
                             ),
                           )),
                     ),
@@ -519,7 +549,7 @@ class _MainScreenState extends State<MainScreen>
               reverse: false,
               models: const [
                 SinusoidalModel(
-                  formular: WaveFormular.standing,
+                  formular: WaveFormular.travelling,
                   amplitude: 25,
                   waves: 20,
                   translate: 2.5,
@@ -532,7 +562,6 @@ class _MainScreenState extends State<MainScreen>
                   frequency: 1.5,
                 ),
                 SinusoidalModel(
-                  formular: WaveFormular.standing,
                   amplitude: 25,
                   waves: 4,
                   translate: 7.5,
@@ -576,7 +605,7 @@ class _MainScreenState extends State<MainScreen>
                                   TextSpan(
                                     children: [
                                       TextSpan(
-                                          text: bpm.r_bpm.toStringAsFixed(0),
+                                          text: maxBpm,
                                           style: appText(
                                               size: 23,
                                               color: heartColor,
@@ -600,7 +629,7 @@ class _MainScreenState extends State<MainScreen>
                                   TextSpan(
                                     children: [
                                       TextSpan(
-                                          text: bpm.b_bpm.toStringAsFixed(0),
+                                          text: minBpm,
                                           style: appText(
                                               size: 23,
                                               color: heartColor,
