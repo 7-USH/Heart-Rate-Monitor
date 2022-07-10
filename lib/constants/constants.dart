@@ -7,7 +7,7 @@ const lightWaveColor = Color(0xff007797);
 const heartColor = Color(0xffFF4B4B);
 const greenHighlight = Color(0xff26DF29);
 
-const instructions = "Place your index finger on camera";
+const instructions = "Place your index finger tightly on camera.";
 const processText = "Analyzing...";
 
 TextStyle appText(

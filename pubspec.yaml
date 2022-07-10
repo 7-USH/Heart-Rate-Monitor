@@ -44,6 +44,8 @@ dependencies:
   flutter_sinusoidals: ^0.1.4
   font_awesome_flutter: ^10.1.0
   breathing_collection: ^1.0.0+3
+  lottie: ^1.3.0
+  fl_chart: 
 
 dev_dependencies:
   flutter_test:

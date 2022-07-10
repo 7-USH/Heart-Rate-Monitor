@@ -35,7 +35,7 @@ class _TestScreenState extends State<TestScreen> {
                 glowColor: waveColor,
                 icon: FontAwesomeIcons.heartPulse,
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (_) {
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) {
                     return MainScreen(
                       cameras: widget.cameras,
                     );
