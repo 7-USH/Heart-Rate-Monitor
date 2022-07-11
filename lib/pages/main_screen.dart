@@ -17,7 +17,6 @@ import 'package:heart_rate_app/pages/background.dart';
 import 'package:camera/camera.dart';
 import 'package:heart_rate_app/pages/test_screen.dart';
 import 'dart:io' as io;
-
 import 'package:lottie/lottie.dart';
 
 class MainScreen extends StatefulWidget {

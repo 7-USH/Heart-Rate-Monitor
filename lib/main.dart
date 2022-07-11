@@ -1,9 +1,8 @@
-// ignore_for_file: depend_on_referenced_packages, unused_import
+// ignore_for_file: depend_on_referenced_packages
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
-import 'package:heart_rate_app/pages/main_screen.dart';
 import 'package:heart_rate_app/pages/test_screen.dart';
 
 List<CameraDescription> cameras = [];
@@ -22,10 +21,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Flutter Demo',
+        title: 'Heart Rate Monitor',
         debugShowCheckedModeBanner: false,
         home: TestScreen(
           cameras: cameras,
         ));
   }
 }
+

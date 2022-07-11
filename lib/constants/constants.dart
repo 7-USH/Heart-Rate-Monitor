@@ -16,16 +16,17 @@ TextStyle appText(
     required FontWeight weight,
     bool isShadow = false}) {
   return GoogleFonts.poppins(
-      color: color,
-      fontSize: size,
-      fontWeight: weight,
-      shadows: isShadow
-          ? [
-              BoxShadow(
-                  color: Colors.black.withOpacity(0.2),
-                  offset: const Offset(0.6, 4),
-                  spreadRadius: 1,
-                  blurRadius: 8)
-            ]
-          : []);
+    color: color,
+    fontSize: size,
+    fontWeight: weight,
+    shadows: isShadow
+        ? [
+            BoxShadow(
+                color: Colors.black.withOpacity(0.2),
+                offset: const Offset(0.6, 4),
+                spreadRadius: 1,
+                blurRadius: 8)
+          ]
+        : [],
+  );
 }
