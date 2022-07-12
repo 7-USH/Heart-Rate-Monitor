@@ -5,7 +5,7 @@ A simple Flutter app to estimate heart beats per minute. The data estimated in t
 Check following repository to know more about [**Heart-Rate-Api**](https://github.com/7-USH/Heart-Rate-API).
 
 ## **Demo**
-![demo](screenshots\demo.mp4)
+![demo](demo.mp4)
 
 
 ## **Requirements**
@@ -22,7 +22,7 @@ Check following repository to know more about [**Heart-Rate-Api**](https://githu
 
 Homepage | Statistics
 ---|---
-![ss2](screenshots\ss2.png) | ![ss1](screenshots\ss1.png)
+![ss2](ss2.png) | ![ss1](ss1.png)
 
 ## **Plugins**
 
