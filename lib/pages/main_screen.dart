@@ -56,7 +56,7 @@ class _MainScreenState extends State<MainScreen>
 
   void updateBool(int number) {
     print(number);
-    if (number < 200) {
+    if (number > 200) {
       isFinger.value = false;
     } else {
       isFinger.value = true;
@@ -66,7 +66,7 @@ class _MainScreenState extends State<MainScreen>
   @override
   void initState() {
     cameraController =
-        CameraController(widget.cameras[0], ResolutionPreset.low);
+        CameraController(widget.cameras[0], ResolutionPreset.high);
     cameraController.initialize().then((value) async {
       if (!mounted) {
         return;
@@ -120,11 +120,11 @@ class _MainScreenState extends State<MainScreen>
   void startRecordingandParsing() async {
     Future.delayed(Duration(seconds: 5)).then((value) async {
       await cameraController.startVideoRecording();
-      imageProcessing();
       await cameraController.setFlashMode(FlashMode.torch);
+      // imageProcessing();
       Future.delayed(Duration(seconds: 16)).then((x) async {
         videoFile = await cameraController.stopVideoRecording();
-        await cameraController.stopImageStream();
+        // await cameraController.stopImageStream();
         print("stop");
         await cameraController.setFlashMode(FlashMode.off);
         setState(() {
@@ -182,7 +182,6 @@ class _MainScreenState extends State<MainScreen>
   @override
   Widget build(BuildContext context) {
     _controller.forward();
-
     List<Widget> pages = [measurePage(), statsPage()];
 
     return Scaffold(
