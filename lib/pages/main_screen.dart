@@ -1,5 +1,4 @@
 // ignore_for_file: prefer_const_constructors, import_of_legacy_library_into_null_safe, unused_import, depend_on_referenced_packages, must_be_immutable, avoid_print, unused_local_variable, unused_field, avoid_unnecessary_containers
-
 import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
@@ -16,6 +15,7 @@ import 'package:heart_rate_app/networking/heart_rate_api.dart';
 import 'package:heart_rate_app/pages/background.dart';
 import 'package:camera/camera.dart';
 import 'package:heart_rate_app/pages/test_screen.dart';
+import 'package:heart_rate_app/utils/color_detector.dart';
 import 'dart:io' as io;
 import 'package:lottie/lottie.dart';
 
@@ -52,26 +52,45 @@ class _MainScreenState extends State<MainScreen>
   bool recordComplete = false;
   String maxBpm = "";
   String minBpm = "";
+  final ValueNotifier<bool> isFinger = ValueNotifier(true);
+
+  void updateBool(int number) {
+    print(number);
+    if (number < 200) {
+      isFinger.value = false;
+    } else {
+      isFinger.value = true;
+    }
+  }
 
   @override
   void initState() {
     cameraController =
-        CameraController(widget.cameras[0], ResolutionPreset.high);
-    cameraController.initialize().then((value) {
+        CameraController(widget.cameras[0], ResolutionPreset.low);
+    cameraController.initialize().then((value) async {
       if (!mounted) {
         return;
       }
-      setState(() {});
+      setState(() {
+        // imageProcessing();
+      });
     });
     startTimer();
     startRecordingandParsing();
     super.initState();
   }
 
+  void imageProcessing() async {
+    await cameraController.startImageStream((image) {
+      updateBool(getColorFromCamera(cameraImage: image));
+    });
+  }
+
   @override
   void dispose() {
     _controller.dispose();
     cameraController.dispose();
+    isFinger.dispose();
     super.dispose();
   }
 
@@ -101,9 +120,11 @@ class _MainScreenState extends State<MainScreen>
   void startRecordingandParsing() async {
     Future.delayed(Duration(seconds: 5)).then((value) async {
       await cameraController.startVideoRecording();
-      cameraController.setFlashMode(FlashMode.torch);
+      imageProcessing();
+      await cameraController.setFlashMode(FlashMode.torch);
       Future.delayed(Duration(seconds: 16)).then((x) async {
         videoFile = await cameraController.stopVideoRecording();
+        await cameraController.stopImageStream();
         print("stop");
         await cameraController.setFlashMode(FlashMode.off);
         setState(() {
@@ -584,13 +605,19 @@ class _MainScreenState extends State<MainScreen>
                           alignment: Alignment.bottomCenter,
                           child: Padding(
                             padding: const EdgeInsets.only(bottom: 20),
-                            child: Text(
-                              instructions,
-                              style: appText(
-                                  color: Colors.white,
-                                  weight: FontWeight.w500,
-                                  isShadow: true),
-                            ),
+                            child: ValueListenableBuilder<bool>(
+                                valueListenable: isFinger,
+                                builder: ((context, value, child) => Text(
+                                      value ? instructions : warning,
+                                      style: appText(
+                                          color: value
+                                              ? Colors.white
+                                              : Colors.yellowAccent,
+                                          weight: value
+                                              ? FontWeight.w500
+                                              : FontWeight.w600,
+                                          isShadow: true),
+                                    ))),
                           ),
                         )
                       : Align(

@@ -5,7 +5,7 @@ import 'package:image/image.dart' as imglib;
 
 // customer function to get color from live camera feed
 
-Color getColorFromCamera({required CameraImage cameraImage}) {
+ int getColorFromCamera({required CameraImage cameraImage}) {
   int width = cameraImage.width ~/ 2;
   int height = cameraImage.height ~/ 2;
   imglib.Image img;
@@ -36,7 +36,7 @@ Color getColorFromCamera({required CameraImage cameraImage}) {
     selectedColor = Colors.green;
   }
 
-  return selectedColor;
+  return imglib.getRed(selectedColor.value);
 }
 
 int _abgrToArgb(int argbColor) {

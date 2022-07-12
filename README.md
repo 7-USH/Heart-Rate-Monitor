@@ -18,7 +18,7 @@ Check following repository to know more about [**Heart-Rate-Api**](https://githu
 
 ## **Plugins**
 
-Package | Usage
+Name | Usage
 ---|---
 [**font_awesome_flutter**](https://pub.dev/packages/font_awesome_flutter) | Awesome icons
 [**flutter_sinusoidals**](https://pub.dev/packages/flutter_sinusoidals) | Sine wave generator
@@ -26,6 +26,10 @@ Package | Usage
 [**camera**](https://pub.dev/packages/camera) | Capture ppg data
 [**lottie**](https://pub.dev/packages/lottie) | Animated gifs
 [**firebase_storage**](https://pub.dev/packages/firebase_storage) | Store video recording
+
+## **Demo**
+
+
 
 ## **License**
 
