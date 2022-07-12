@@ -4,6 +4,10 @@ A simple Flutter app to estimate heart beats per minute. The data estimated in t
 
 Check following repository to know more about [**Heart-Rate-Api**](https://github.com/7-USH/Heart-Rate-API).
 
+## **Demo**
+![demo](screenshots\demo.mp4)
+
+
 ## **Requirements**
 - Any Operating System (i.e. MacOS X, Linux, Window)
 - Any IDE with Flutter SDK installed (i.e. IntelliJ, Android Studio, VSCode etc)
@@ -16,6 +20,10 @@ Check following repository to know more about [**Heart-Rate-Api**](https://githu
 
 ## **Screenshots**
 
+Homepage | Statistics
+---|---
+![ss2](screenshots\ss2.png) | ![ss1](screenshots\ss1.png)
+
 ## **Plugins**
 
 Name | Usage
@@ -26,10 +34,6 @@ Name | Usage
 [**camera**](https://pub.dev/packages/camera) | Capture ppg data
 [**lottie**](https://pub.dev/packages/lottie) | Animated gifs
 [**firebase_storage**](https://pub.dev/packages/firebase_storage) | Store video recording
-
-## **Demo**
-
-
 
 ## **License**
 
