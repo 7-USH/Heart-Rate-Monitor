@@ -18,12 +18,6 @@ Check following repository to know more about [**Heart-Rate-Api**](https://githu
 - [x] Estimate BPM
 - [x] Heart rate statistics 
 
-## **Screenshots**
-
-Homepage | Statistics
----|---
-![ss2](ss2.png) | ![ss1](ss1.png)
-
 ## **Plugins**
 
 Name | Usage
@@ -34,6 +28,12 @@ Name | Usage
 [**camera**](https://pub.dev/packages/camera) | Capture ppg data
 [**lottie**](https://pub.dev/packages/lottie) | Animated gifs
 [**firebase_storage**](https://pub.dev/packages/firebase_storage) | Store video recording
+
+## **Screenshots**
+
+Homepage | Statistics
+---|---
+![ss2](ss2.png) | ![ss1](ss1.png)
 
 ## **License**
 
